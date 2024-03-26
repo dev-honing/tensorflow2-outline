@@ -57,12 +57,11 @@ for i, contour in enumerate(contours):
     for point in contour:
         cv2.circle(image, tuple(point[0]), 3, (0, 0, 255), -1)  # 빨간색 점으로 표시
 
-    # 초록색 영역 중 가장 큰 면적을 타겟으로 설정
-    target_area = max(areas)
+    print(f"초록색 영역 {i+1}을 찾았습니다.")
 
 # 개체수 출력
 num_objects = len(areas)
-print(f"개체수는 {num_objects}인 것으로 예측합니다.")
+print(f"개체수는 {num_objects}인 것으로 예측합니다. 이는 초록색 영역 {num_objects}개를 찾았기 때문입니다.")
 
 # 결과 이미지 출력
 cv2.imshow('Result', image)
