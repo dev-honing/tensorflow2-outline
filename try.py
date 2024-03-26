@@ -68,3 +68,17 @@ def show_image(image, window_name='Image'):
     cv2.imshow(window_name, image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+# 각 함수를 사용
+if __name__ == "__main__":
+    # 이미지 경로 설정
+    image_path = input("이미지 경로를 입력하세요: ")
+    
+    # 전처리된 이미지와 컨투어 정보
+    inner_image, contours = preprocess_image(image_path)
+    
+    # 확인 콘솔 출력
+    print_console(inner_image, contours)
+    
+    # 결과 이미지 출력
+    show_image(inner_image)
