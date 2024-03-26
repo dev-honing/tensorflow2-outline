@@ -59,3 +59,12 @@ for i, contour in enumerate(contours):
 
     # 초록색 영역 중 가장 큰 면적을 타겟으로 설정
     target_area = max(areas)
+
+# 개체수 출력
+num_objects = len(areas)
+print(f"개체수는 {num_objects}인 것으로 예측합니다.")
+
+# 결과 이미지 출력
+cv2.imshow('Result', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
