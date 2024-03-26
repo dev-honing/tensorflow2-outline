@@ -35,3 +35,7 @@ green_contours_image[np.where((green_contours_image != [0, 255, 0]).all(axis=-1)
 
 # 변경된 이미지 저장
 cv2.imwrite('green_contours_with_background.png', green_contours_image)
+
+# 변경된 이미지 불러오기
+new_image_path = './green_contours_with_background.png'
+image = cv2.imread(new_image_path)
