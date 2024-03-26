@@ -45,3 +45,17 @@ lower_green = np.array([35, 50, 50])
 upper_green = np.array([85, 255, 255])
 hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 green_mask = cv2.inRange(hsv_image, lower_green, upper_green)
+
+# 초록색 영역의 면적과 인덱스 계산
+contours, _ = cv2.findContours(green_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+areas = []
+for i, contour in enumerate(contours):
+    area = cv2.contourArea(contour)
+    areas.append(area)
+    print(f"초록색 영역 {i+1}의 면적:", area)
+    # 초록색 영역의 인덱스 계산 및 표시
+    for point in contour:
+        cv2.circle(image, tuple(point[0]), 3, (0, 0, 255), -1)  # 빨간색 점으로 표시
+
+    # 초록색 영역 중 가장 큰 면적을 타겟으로 설정
+    target_area = max(areas)
