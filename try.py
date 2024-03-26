@@ -2,9 +2,14 @@
 import cv2
 import numpy as np
 
-# 이미지 불러오기
-image_path = './3dog.png'
-image = cv2.imread(image_path)
+# 이미지를 추가하는 함수
+def put_image(image_path):
+    image_path = './3dog.png' # fixme: 이미지 경로를 수정하세요.
+    image = cv2.imread(image_path)
+    if image is None: 
+        print("이미지를 불러오지 못했습니다.")
+        return None
+    return image
 
 # 그레이스케일링
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
