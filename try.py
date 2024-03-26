@@ -59,3 +59,12 @@ def print_console(image, contours):
     print(" - 컨투어 개수:", len(contours))
     for i, contour in enumerate(contours):
         print(f" - 컨투어 {i+1}의 포인트 개수:", len(contour))
+        
+# 결과 이미지를 출력하는 함수
+def show_image(image, window_name='Image'):
+    """
+    결과 이미지를 출력하는 함수
+    """
+    cv2.imshow(window_name, image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
