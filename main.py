@@ -39,3 +39,9 @@ cv2.imwrite('green_contours_with_background.png', green_contours_image)
 # 변경된 이미지 불러오기
 new_image_path = './green_contours_with_background.png'
 image = cv2.imread(new_image_path)
+
+# 초록색 영역 추출
+lower_green = np.array([35, 50, 50])
+upper_green = np.array([85, 255, 255])
+hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+green_mask = cv2.inRange(hsv_image, lower_green, upper_green)
