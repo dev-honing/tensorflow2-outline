@@ -24,3 +24,14 @@ cv2.drawContours(green_contours_image, contours, -1, (0, 255, 0), 2)
 
 # 이미지 저장
 cv2.imwrite('green_contours_image.png', green_contours_image)
+
+# 초록색 외곽선 이미지 불러오기
+green_contours_image_path = 'green_contours_image.png'
+green_contours_image = cv2.imread(green_contours_image_path)
+
+# 배경색 변경
+background_color = [0, 0, 0]  # 변경하고자 하는 배경색: 검은색
+green_contours_image[np.where((green_contours_image != [0, 255, 0]).all(axis=-1))] = background_color # 초록색 외곽선만 남기고 나머지 배경색 변경
+
+# 변경된 이미지 저장
+cv2.imwrite('green_contours_with_background.png', green_contours_image)
