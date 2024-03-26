@@ -20,3 +20,8 @@ contours, _ = cv2.findContours(edges.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX
 
 # 컨투어 그리기
 cv2.drawContours(image, contours, -1, (0, 255, 0), 2)
+
+# 결과 이미지 출력
+cv2.imshow('Outline Detection', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
