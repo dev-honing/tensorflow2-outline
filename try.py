@@ -4,7 +4,9 @@ import numpy as np
 
 # 이미지를 추가하는 함수
 def put_image(image_path):
-    image_path = './3dog.png' # fixme: 이미지 경로를 수정하세요.
+    """
+    이미지 경로를 받아서 해당 이미지를 불러와 반환하는 함수
+    """
     image = cv2.imread(image_path)
     if image is None: 
         print("이미지를 불러오지 못했습니다.")
@@ -13,7 +15,10 @@ def put_image(image_path):
 
 # 이미지를 전처리하는 함수
 def preprocess_image(image_path):
-    # 이미지를 불러오기(put_image 함수)
+    """
+    이미지를 전처리하여 내부 이미지와 컨투어 정보를 반환하는 함수
+    """
+    # 이미지를 불러오기
     image = put_image(image_path)
     if image is None:
         return None
@@ -39,11 +44,18 @@ def preprocess_image(image_path):
     
     return inner_image, contours
 
-# 외곽선 개수 출력
-num_contours = len(contours)
-print("외곽선 개수:", num_contours)
-
-# 결과 이미지 출력
-cv2.imshow('Result', inner_image)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# 확인 콘솔을 출력하는 함수
+def print_console(image, contours):
+    """
+    확인 콘솔을 출력하는 함수
+    """
+    # 이미지 정보 출력
+    print("이미지 정보:")
+    print(" - 이미지 크기:", image.shape)
+    print(" - 이미지 타입:", type(image))
+    
+    # 컨투어 정보 출력
+    print("\n컨투어 정보:")
+    print(" - 컨투어 개수:", len(contours))
+    for i, contour in enumerate(contours):
+        print(f" - 컨투어 {i+1}의 포인트 개수:", len(contour))
