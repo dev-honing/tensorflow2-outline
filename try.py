@@ -42,9 +42,9 @@ def preprocess_image(image_path):
     # 안쪽 이미지 생성
     inner_image = cv2.bitwise_and(image, mask)
     
-    # 컨투어의 최소 길이 동적으로 설정하기(원본 이미지의 가로, 세로 중 큰 값의 30%)
+    # 컨투어의 최소 길이 동적으로 설정하기
     original_size = max(image.shape[:2])
-    min_contour_length = original_size * 0.3
+    min_contour_length = original_size * 0.4
     
     # 컨투어의 길이가 최소 길이보다 큰 경우만 유지
     filtered_contours = []
@@ -56,7 +56,12 @@ def preprocess_image(image_path):
     # 빨간색 외곽선 추가
     cv2.drawContours(inner_image, filtered_contours, -1, (0, 0, 255), 2)
     
-    return inner_image
+    # 빨간색 컨투어 내부의 면적 계산
+    red_contour_area = 0
+    for contour in filtered_contours:
+        red_contour_area += cv2.contourArea(contour)
+    
+    return inner_image, red_contour_area
 
 # 결과 이미지를 출력하는 함수
 def show_image(image, window_name='Image'):
@@ -65,15 +70,18 @@ def show_image(image, window_name='Image'):
     """
     cv2.imshow(window_name, image)
     cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
 # 각 함수를 사용
 if __name__ == "__main__":
     # 이미지 경로 설정
     image_path = input("이미지 경로를 입력하세요: ")
     
-    # 전처리된 이미지
-    result_image = preprocess_image(image_path)
+    # 전처리된 이미지와 빨간색 컨투어 내부의 면적
+    result_image, red_contour_area = preprocess_image(image_path)
     
+    # 빨간색 컨투어 내부의 면적 출력
+    print("빨간색 컨투어 내부의 면적:", red_contour_area)
+
     # 결과 이미지 출력
-    show_image(result_image)
+    show_image(result_image, window_name='Preprocessed Image')    
+    
