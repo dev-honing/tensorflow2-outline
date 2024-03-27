@@ -42,24 +42,22 @@ def preprocess_image(image_path):
     # 안쪽 이미지 생성
     inner_image = cv2.bitwise_and(image, mask)
     
-    return inner_image, contours
-
-# 확인 콘솔을 출력하는 함수
-def print_console(image, contours):
-    """
-    확인 콘솔을 출력하는 함수
-    """
-    # 이미지 정보 출력
-    print("이미지 정보:")
-    print(" - 이미지 크기:", image.shape)
-    print(" - 이미지 타입:", type(image))
+    # 컨투어의 최소 길이 동적으로 설정하기(원본 이미지의 가로, 세로 중 큰 값의 30%)
+    original_size = max(image.shape[:2])
+    min_contour_length = original_size * 0.3
     
-    # 컨투어 정보 출력
-    print("\n컨투어 정보:")
-    print(" - 컨투어 개수:", len(contours))
-    for i, contour in enumerate(contours):
-        print(f" - 컨투어 {i+1}의 포인트 개수:", len(contour))
-        
+    # 컨투어의 길이가 최소 길이보다 큰 경우만 유지
+    filtered_contours = []
+    for contour in contours:
+        contour_length = cv2.arcLength(contour, True)
+        if contour_length > min_contour_length:
+            filtered_contours.append(contour)
+    
+    # 빨간색 외곽선 추가
+    cv2.drawContours(inner_image, filtered_contours, -1, (0, 0, 255), 2)
+    
+    return inner_image
+
 # 결과 이미지를 출력하는 함수
 def show_image(image, window_name='Image'):
     """
@@ -74,11 +72,8 @@ if __name__ == "__main__":
     # 이미지 경로 설정
     image_path = input("이미지 경로를 입력하세요: ")
     
-    # 전처리된 이미지와 컨투어 정보
-    inner_image, contours = preprocess_image(image_path)
-    
-    # 확인 콘솔 출력
-    print_console(inner_image, contours)
+    # 전처리된 이미지
+    result_image = preprocess_image(image_path)
     
     # 결과 이미지 출력
-    show_image(inner_image)
+    show_image(result_image)
