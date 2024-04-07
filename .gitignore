@@ -1,3 +1,6 @@
 .outline/
 **.png
 **.jpg
+
+# 가상환경
+.tf/
